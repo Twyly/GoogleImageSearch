@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rlSettings">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/image_size_label"
+        android:id="@+id/tvImageSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/spnImageSize"
+        android:gravity="center_vertical" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spnImageSize"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:focusable="false"
+        android:spinnerMode="dropdown"
+        android:layout_toRightOf="@+id/tvImageSize"
+        android:layout_toEndOf="@+id/tvImageSize" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/image_color_label"
+        android:id="@+id/tvColor"
+        android:layout_below="@+id/tvImageSize"
+        android:layout_alignBottom="@+id/spnColor"
+        android:gravity="center_vertical" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spnColor"
+        android:spinnerMode="dropdown"
+        android:layout_below="@+id/tvImageSize"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/tvColor"
+        android:layout_toEndOf="@+id/tvColor" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/image_type_label"
+        android:id="@+id/tvType"
+        android:layout_below="@+id/tvColor"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="center_vertical"
+        android:layout_alignBottom="@+id/spnType" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spnType"
+        android:layout_below="@+id/spnColor"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/tvType"
+        android:layout_toEndOf="@+id/tvType" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/image_rights_label"
+        android:id="@+id/tvRights"
+        android:layout_below="@+id/tvType"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/spnRights"
+        android:gravity="center_vertical" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spnRights"
+        android:layout_below="@+id/spnType"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/tvRights"
+        android:layout_toEndOf="@+id/tvRights"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/image_site_label"
+        android:id="@+id/tvSite"
+        android:layout_below="@+id/tvRights"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/etSite"
+        android:gravity="center_vertical" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/etSite"
+        android:layout_below="@+id/spnRights"
+        android:layout_alignRight="@+id/spnRights"
+        android:layout_alignEnd="@+id/spnRights"
+        android:layout_toRightOf="@+id/tvSite"
+        android:layout_toEndOf="@+id/tvSite" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tvSite"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_button_label"
+            android:id="@+id/btnSave"
+            android:layout_gravity="center_vertical" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_button_label"
+            android:id="@+id/btnCancel"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
+
+
+</RelativeLayout>
