@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.teddywyly.googleimagesearch.Models.GoogleSearchSettings;
 import com.example.teddywyly.googleimagesearch.R;
 
 import java.util.Set;
@@ -24,6 +25,12 @@ import java.util.Set;
  */
 public class SettingsDialog extends DialogFragment implements View.OnClickListener {
 
+    private GoogleSearchSettings searchSettings;
+    private Spinner spnSize;
+    private Spinner spnColor;
+    private Spinner spnType;
+    private Spinner spnRights;
+
     public interface SettingsDialogListener {
         void onSaveSettings();
     }
@@ -32,10 +39,10 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
 
     }
 
-    public static SettingsDialog newInstance(String title) {
+    public static SettingsDialog newInstance(GoogleSearchSettings settings) {
         SettingsDialog frag = new SettingsDialog();
         Bundle args = new Bundle();
-        args.putString("title", title);
+        args.putSerializable("settings", settings);
         frag.setArguments(args);
         return frag;
     }
@@ -71,12 +78,33 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
         Button btnCancel = (Button)view.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(this);
 
-        String title = getArguments().getString("title", "Enter Name");
-        getDialog().setTitle(title);
+        GoogleSearchSettings settings = (GoogleSearchSettings)getArguments().getSerializable("settings");
+        searchSettings = settings;
+        getDialog().setTitle(settings.resultsPerPage + "");
 
-        Spinner imageSizeSpinner = (Spinner) view.findViewById(R.id.spnImageSize);
+        spnSize = (Spinner) view.findViewById(R.id.spnSize);
         ArrayAdapter<CharSequence> imageSizeAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.image_sizes_array, android.R.layout.simple_spinner_dropdown_item);
-        imageSizeSpinner.setAdapter(imageSizeAdapter);
+        spnSize.setAdapter(imageSizeAdapter);
+
+        spnColor = (Spinner) view.findViewById(R.id.spnColor);
+        ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.image_colors_array, android.R.layout.simple_spinner_dropdown_item);
+        spnColor.setAdapter(colorAdapter);
+
+        spnType = (Spinner) view.findViewById(R.id.spnType);
+        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.image_types_array, android.R.layout.simple_spinner_dropdown_item);
+        spnType.setAdapter(typeAdapter);
+
+        spnRights = (Spinner) view.findViewById(R.id.spnRights);
+        ArrayAdapter<CharSequence> rightsAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.image_rights_array, android.R.layout.simple_spinner_dropdown_item);
+        spnRights.setAdapter(rightsAdapter);
+    }
+
+    private void updateViewsFromSettings() {
+
+    }
+
+    private void updateSettingsFromViews() {
+
     }
 
     @Override

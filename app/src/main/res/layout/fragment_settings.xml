@@ -13,13 +13,13 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/spnImageSize"
+        android:layout_alignBottom="@+id/spnSize"
         android:gravity="center_vertical" />
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spnImageSize"
+        android:id="@+id/spnSize"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

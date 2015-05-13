@@ -1,9 +1,12 @@
 package com.example.teddywyly.googleimagesearch.Models;
 
+import java.io.Serializable;
+
 /**
  * Created by teddywyly on 5/13/15.
  */
-public class GoogleSearchSettings {
+public class GoogleSearchSettings implements Serializable {
+
 
     public enum ImageSize {
         SMALL("icon"), MEDIUM("small|medium|large|xlarge"), LARGE("xxlarge"), EXTRA_LARGE("huge");
@@ -39,6 +42,7 @@ public class GoogleSearchSettings {
         }
     }
 
+    private static final long serialVersionUID = 5249605308630544032L;
     public ImageSize size;
     public ImageColor color;
     public ImageType type;
