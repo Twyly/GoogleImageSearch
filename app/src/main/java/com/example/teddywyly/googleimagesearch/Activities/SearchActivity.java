@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.support.v7.widget.SearchView;
 
+import com.etsy.android.grid.StaggeredGridView;
 import com.example.teddywyly.googleimagesearch.Adapters.ImageResultsAdapter;
 import com.example.teddywyly.googleimagesearch.EndlessScrollListener;
 import com.example.teddywyly.googleimagesearch.Fragments.SettingsDialog;
@@ -40,7 +41,7 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
 
     //private EditText etQuery;
     private SearchView svQuery;
-    private GridView gvResults;
+    private StaggeredGridView sgvResults;
     private ArrayList<ImageResult> imageResults;
     private ImageResultsAdapter aImageResults;
     private GoogleSearchSettings searchSettings;
@@ -54,13 +55,13 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
         imageResults = new ArrayList<ImageResult>();
         aImageResults = new ImageResultsAdapter(this, imageResults);
         //aImageResults.setServerListSize(64);
-        gvResults.setAdapter(aImageResults);
+        sgvResults.setAdapter(aImageResults);
     }
 
     public void setupViews() {
         //etQuery = (EditText)findViewById(R.id.etQuery);
-        gvResults = (GridView)findViewById(R.id.gvResults);
-        gvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        sgvResults = (StaggeredGridView)findViewById(R.id.sgvResults);
+        sgvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(SearchActivity.this, ImageDisplayActivity.class);
@@ -69,7 +70,7 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
                 startActivity(intent);
             }
         });
-        gvResults.setOnScrollListener(new EndlessScrollListener() {
+        sgvResults.setOnScrollListener(new EndlessScrollListener() {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 fetchImagesForPage(page);
