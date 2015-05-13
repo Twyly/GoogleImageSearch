@@ -14,7 +14,9 @@ import android.widget.EditText;
 import android.widget.GridView;
 
 import com.example.teddywyly.googleimagesearch.Adapters.ImageResultsAdapter;
+import com.example.teddywyly.googleimagesearch.EndlessScrollListener;
 import com.example.teddywyly.googleimagesearch.Fragments.SettingsDialog;
+import com.example.teddywyly.googleimagesearch.Models.GoogleSearchSettings;
 import com.example.teddywyly.googleimagesearch.Models.ImageResult;
 import com.example.teddywyly.googleimagesearch.R;
 import com.loopj.android.http.AsyncHttpClient;
@@ -28,22 +30,26 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 
-public class SearchActivity extends ActionBarActivity {
+public class SearchActivity extends ActionBarActivity implements SettingsDialog.SettingsDialogListener {
 
     private final String SEACH_ENDPOINT = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0";
+    private final int ITEMS_PER_FETCH = 8;
 
     private EditText etQuery;
     private GridView gvResults;
     private ArrayList<ImageResult> imageResults;
     private ImageResultsAdapter aImageResults;
+    private GoogleSearchSettings searchSettings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        searchSettings = new GoogleSearchSettings(ITEMS_PER_FETCH);
         setupViews();
         imageResults = new ArrayList<ImageResult>();
         aImageResults = new ImageResultsAdapter(this, imageResults);
+        //aImageResults.setServerListSize(64);
         gvResults.setAdapter(aImageResults);
     }
 
@@ -57,6 +63,12 @@ public class SearchActivity extends ActionBarActivity {
                 ImageResult result = imageResults.get(i);
                 intent.putExtra("result", result);
                 startActivity(intent);
+            }
+        });
+        gvResults.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                fetchImagesForPage(page);
             }
         });
     }
@@ -90,23 +102,31 @@ public class SearchActivity extends ActionBarActivity {
 
     // Interesting that this cannot accept argument of type Button
     public void onImageSearch(View view) {
+        fetchImagesForPage(0);
+    }
+
+    public void fetchImagesForPage(final int page) {
         String query = etQuery.getText().toString();
-        String searchUrl = SEACH_ENDPOINT + "&q=" + query + "&rsz=" + "8";
+        String searchUrl = SEACH_ENDPOINT + "&start=" + searchSettings.resultsPerPage*page + searchSettings.settingsAsQueryString() + "&q=" + query;
+        Log.d("DEBUG", searchUrl);
         AsyncHttpClient client = new AsyncHttpClient();
 
         client.get(searchUrl, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray imageResultsJSON = null;
-
                 try {
                     imageResultsJSON = response.getJSONObject("responseData").getJSONArray("results");
-                    imageResults.clear(); // If new search
-                    aImageResults.addAll(ImageResult.fromJSONArray(imageResultsJSON));
+                    if (page == 0) {
+                        imageResults.clear(); // If new search
+                    }
+                    imageResults.addAll(ImageResult.fromJSONArray(imageResultsJSON));
+                    aImageResults.notifyDataSetChanged();
+//                    aImageResults.addAll();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -116,4 +136,8 @@ public class SearchActivity extends ActionBarActivity {
         });
     }
 
+    @Override
+    public void onSaveSettings() {
+        Log.d("Debug", "Save!");
+    }
 }

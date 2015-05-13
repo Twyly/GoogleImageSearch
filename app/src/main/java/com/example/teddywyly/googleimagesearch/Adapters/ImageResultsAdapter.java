@@ -1,6 +1,8 @@
 package com.example.teddywyly.googleimagesearch.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.media.Image;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import com.example.teddywyly.googleimagesearch.Models.ImageResult;
 import com.example.teddywyly.googleimagesearch.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +27,30 @@ public class ImageResultsAdapter extends ArrayAdapter<ImageResult> {
 
     }
 
+//    public ImageResultsAdapter(Activity activity, ArrayList<ImageResult> list) {
+//        super(activity, list);
+//    }
+//
+//    @Override
+//    public View getDataRow(int position, View convertView, ViewGroup parent) {
+//
+//        ImageResult imageInfo = getItem(position);
+//        if (convertView == null) {
+//            convertView = LayoutInflater.from(mActivity).inflate(R.layout.item_image_result, parent, false);
+//        }
+//
+//        ImageView ivImage = (ImageView)convertView.findViewById(R.id.ivImage);
+//        TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
+//
+//        // Clear Previous Results
+//        ivImage.setImageResource(0);
+//
+//        // Paint View
+//        tvTitle.setText(Html.fromHtml(imageInfo.title));
+//        Picasso.with(mActivity).load(imageInfo.thumbUrl).into(ivImage);
+//
+//        return convertView;
+//    }
 
     public ImageResultsAdapter(Context context, List<ImageResult> images) {
         super(context, R.layout.item_image_result, images);
