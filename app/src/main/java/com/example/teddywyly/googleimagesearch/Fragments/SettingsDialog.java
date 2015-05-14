@@ -30,9 +30,10 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
     private Spinner spnColor;
     private Spinner spnType;
     private Spinner spnRights;
+    private EditText etSite;
 
     public interface SettingsDialogListener {
-        void onSaveSettings();
+        void onSaveSettings(GoogleSearchSettings settings);
     }
 
     public SettingsDialog() {
@@ -78,43 +79,111 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
         Button btnCancel = (Button)view.findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(this);
 
+        etSite = (EditText)view.findViewById(R.id.etSite);
+
         GoogleSearchSettings settings = (GoogleSearchSettings)getArguments().getSerializable("settings");
         searchSettings = settings;
-        getDialog().setTitle(settings.resultsPerPage + "");
+        Log.i("DEBUGCOLOR", settings.color.toString());
+        getDialog().setTitle("Filter Search");
 
         spnSize = (Spinner) view.findViewById(R.id.spnSize);
-        ArrayAdapter<CharSequence> imageSizeAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.image_sizes_array, android.R.layout.simple_spinner_dropdown_item);
-        spnSize.setAdapter(imageSizeAdapter);
+        spnSize.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageSize>(getActivity(), android.R.layout.simple_spinner_dropdown_item, GoogleSearchSettings.ImageSize.values()));
 
         spnColor = (Spinner) view.findViewById(R.id.spnColor);
-        ArrayAdapter<CharSequence> colorAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.image_colors_array, android.R.layout.simple_spinner_dropdown_item);
-        spnColor.setAdapter(colorAdapter);
+        spnColor.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageColor>(getActivity(), android.R.layout.simple_spinner_dropdown_item, GoogleSearchSettings.ImageColor.values()));
 
         spnType = (Spinner) view.findViewById(R.id.spnType);
-        ArrayAdapter<CharSequence> typeAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.image_types_array, android.R.layout.simple_spinner_dropdown_item);
-        spnType.setAdapter(typeAdapter);
+        spnType.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageType>(getActivity(), android.R.layout.simple_spinner_dropdown_item, GoogleSearchSettings.ImageType.values()));
 
         spnRights = (Spinner) view.findViewById(R.id.spnRights);
-        ArrayAdapter<CharSequence> rightsAdapter = ArrayAdapter.createFromResource(getActivity(), R.array.image_rights_array, android.R.layout.simple_spinner_dropdown_item);
-        spnRights.setAdapter(rightsAdapter);
+        spnRights.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageRights>(getActivity(), android.R.layout.simple_spinner_dropdown_item, GoogleSearchSettings.ImageRights.values()));
+
+        updateViewsFromSettings();
     }
 
-    private void updateViewsFromSettings() {
 
+    private void updateViewsFromSettings() {
+        spnSize.setSelection(((ArrayAdapter<GoogleSearchSettings.ImageSize>)spnSize.getAdapter()).getPosition(searchSettings.size));
+        spnColor.setSelection(((ArrayAdapter<GoogleSearchSettings.ImageColor>)spnColor.getAdapter()).getPosition(searchSettings.color));
+        spnType.setSelection(((ArrayAdapter<GoogleSearchSettings.ImageType>)spnType.getAdapter()).getPosition(searchSettings.type));
+        spnRights.setSelection(((ArrayAdapter<GoogleSearchSettings.ImageRights>)spnRights.getAdapter()).getPosition(searchSettings.rights));
+        etSite.setText(searchSettings.siteFilter);
     }
 
     private void updateSettingsFromViews() {
-
+        searchSettings.size = (GoogleSearchSettings.ImageSize)spnSize.getSelectedItem();
+        searchSettings.color = (GoogleSearchSettings.ImageColor)spnColor.getSelectedItem();
+        searchSettings.type = (GoogleSearchSettings.ImageType)spnType.getSelectedItem();
+        searchSettings.rights = (GoogleSearchSettings.ImageRights)spnRights.getSelectedItem();
+        searchSettings.siteFilter = etSite.getText().toString();
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btnSave) {
             SettingsDialogListener listener = (SettingsDialogListener) getActivity();
-            listener.onSaveSettings();
+            updateSettingsFromViews();
+            listener.onSaveSettings(searchSettings);
             dismiss();
         } else if (view.getId() == R.id.btnCancel) {
             dismiss();
         }
     }
+
+//    public enum ImageSize {
+//        ANY("Any"), SMALL("Small"), MEDIUM("Medium"), LARGE("Large"), EXTRA_LARGE("Extra Large");
+//        private String displayName;
+//        private ImageSize(String displayName) {
+//            this.displayName = displayName;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return displayName;
+//        }
+//    }
+//
+//    public enum ImageColor {
+//        ANY("Any"), BLACK("black"), BLUE("blue"), BROWN("brown"), GRAY("gray"), GREEN("green"),
+//        ORANGE("orange"), PINK("pink"), PURPLE("purple"), RED("red"), TEAL("teal"),
+//        WHITE("white"), YELLOW("yellow");
+//
+//        private String displayName;
+//
+//        private ImageColor(String displayName) {
+//            this.displayName = displayName;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return displayName;
+//        }
+//    }
+//
+//    // Spinner Titles
+//    public enum ImageType {
+//        ANY("Any"), FACE("Face"), PHOTO("photo"), CLIPART("clipart"), LINEART("lineart");
+//        private String displayName;
+//        private ImageType(String displayName) {
+//            this.displayName = displayName;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            return displayName;
+//        }
+//    }
+//
+//    public enum ImageRights {
+//        ALL("All"), PUBLIC_DOMAIN("Public Domain"), ATTRIBUTE("Attributable"), NON_COMMERCIAL("Noncommerical");
+//        private String displayName;
+//        private ImageRights(String displayName) {
+//            this.displayName = displayName;
+//        }
+//
+//        @Override
+//        public String toString() {
+//            displayName;
+//        }
+//    }
 }

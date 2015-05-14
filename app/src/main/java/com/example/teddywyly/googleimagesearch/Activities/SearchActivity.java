@@ -45,17 +45,20 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
     private ArrayList<ImageResult> imageResults;
     private ImageResultsAdapter aImageResults;
     private GoogleSearchSettings searchSettings;
+    private Boolean isFetching = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         searchSettings = new GoogleSearchSettings(ITEMS_PER_FETCH);
+        searchSettings.color = GoogleSearchSettings.ImageColor.RED;
         setupViews();
         imageResults = new ArrayList<ImageResult>();
         aImageResults = new ImageResultsAdapter(this, imageResults);
-        //aImageResults.setServerListSize(64);
         sgvResults.setAdapter(aImageResults);
+
+
     }
 
     public void setupViews() {
@@ -84,6 +87,7 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
         getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         svQuery = (SearchView) MenuItemCompat.getActionView(searchItem);
+
         svQuery.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -121,13 +125,15 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
         settingsDialog.show(fm, "fragment_settings");
     }
 
-    // Interesting that this cannot accept argument of type Button
-//    public void onImageSearch(View view) {
-//        fetchImagesForPage(0);
-//    }
 
     public void fetchImagesForPage(final int page) {
+
+        if (svQuery == null || isFetching) {
+            return;
+        }
+        isFetching = true;
         String query = svQuery.getQuery().toString();
+
         String searchUrl = SEACH_ENDPOINT + "&start=" + searchSettings.resultsPerPage*page + searchSettings.settingsAsQueryString() + "&q=" + query;
         Log.d("DEBUG", searchUrl);
         AsyncHttpClient client = new AsyncHttpClient();
@@ -140,25 +146,28 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
                     imageResultsJSON = response.getJSONObject("responseData").getJSONArray("results");
                     if (page == 0) {
                         imageResults.clear(); // If new search
+                        aImageResults.notifyDataSetChanged();
                     }
                     imageResults.addAll(ImageResult.fromJSONArray(imageResultsJSON));
                     aImageResults.notifyDataSetChanged();
-//                    aImageResults.addAll();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                isFetching = false;
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 super.onFailure(statusCode, headers, responseString, throwable);
+                isFetching = false;
             }
         });
     }
 
     @Override
-    public void onSaveSettings() {
+    public void onSaveSettings(GoogleSearchSettings settings) {
+        searchSettings = settings;
         Log.d("Debug", "Save!");
     }
 }

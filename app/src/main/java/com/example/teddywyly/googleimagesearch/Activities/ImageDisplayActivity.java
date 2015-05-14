@@ -3,26 +3,48 @@ package com.example.teddywyly.googleimagesearch.Activities;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.teddywyly.googleimagesearch.Models.ImageResult;
 import com.example.teddywyly.googleimagesearch.R;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 
 public class ImageDisplayActivity extends AppCompatActivity {
 
+    private ProgressBar pbImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_display);
-        //getActionBar().hide();
+
         getSupportActionBar().hide();
         ImageResult result = (ImageResult) getIntent().getSerializableExtra("result");
+        TextView tvImageDescription = (TextView)findViewById(R.id.tvImageDescription);
+        pbImage = (ProgressBar)findViewById(R.id.pbImage);
+        tvImageDescription.setText(Html.fromHtml(result.title));
+
         ImageView ivFullImage = (ImageView)findViewById(R.id.ivFullImage);
-        Picasso.with(this).load(result.fullUrl).into(ivFullImage);
+        Picasso.with(this).load(result.fullUrl).into(ivFullImage, new Callback() {
+            @Override
+            public void onSuccess() {
+                pbImage.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onError() {
+                // Handle Error
+                pbImage.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override

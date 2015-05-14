@@ -64,13 +64,13 @@ public class ImageResultsAdapter extends ArrayAdapter<ImageResult> {
         }
 
         ImageView ivImage = (ImageView)convertView.findViewById(R.id.ivImage);
-        TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
+        //TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
 
         // Clear Previous Results
         ivImage.setImageResource(0);
 
         // Paint View
-        tvTitle.setText(Html.fromHtml(imageInfo.title));
+        //tvTitle.setText(Html.fromHtml(imageInfo.title));
         Picasso.with(getContext()).load(imageInfo.thumbUrl).into(ivImage);
 
         return convertView;

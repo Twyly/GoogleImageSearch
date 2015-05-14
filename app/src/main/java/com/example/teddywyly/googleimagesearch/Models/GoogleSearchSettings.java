@@ -5,48 +5,80 @@ import java.io.Serializable;
 /**
  * Created by teddywyly on 5/13/15.
  */
+
+
+// Having the displayname in here is a violation of MVC, but due to the exceissive switch statements
+    // it saves, it seems worth it
+
 public class GoogleSearchSettings implements Serializable {
 
 
     public enum ImageSize {
-        SMALL("icon"), MEDIUM("small|medium|large|xlarge"), LARGE("xxlarge"), EXTRA_LARGE("huge");
+        ANY(null, "Any"), SMALL("icon", "Small"), MEDIUM("small|medium|large|xlarge", "Medium"), LARGE("xxlarge", "Large"), EXTRA_LARGE("huge", "Extra Large");
         private String value;
-        private ImageSize(String value) {
+        private String displayName;
+        private ImageSize(String value, String displayName) {
             this.value = value;
+            this.displayName = displayName;
+        }
+        @Override
+        public String toString() {
+            return displayName;
         }
     }
 
     public enum ImageColor {
-        BLACK("black"), BLUE("blue"), BROWN("brown"), GRAY("gray"), GREEN("green"),
-        ORANGE("orange"), PINK("pink"), PURPLE("purple"), RED("red"), TEAL("teal"),
-        WHITE("white"), YELLOW("yellow");
+        ANY(null, "Any"), BLACK("black", "Black"), BLUE("blue", "Nlue"), BROWN("brown", "Brown"), GRAY("gray", "Gray"), GREEN("green", "Green"),
+        ORANGE("orange", "Orange"), PINK("pink", "Pink"), PURPLE("purple", "Purple"), RED("red", "Red"), TEAL("teal", "Teal"),
+        WHITE("white", "White"), YELLOW("yellow", "Yellow");
         private String value;
-        private ImageColor(String value) {
+        private String displayName;
+        private ImageColor(String value, String displayName) {
             this.value = value;
+            this.displayName = displayName;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
         }
     }
 
     public enum ImageType {
-        FACE("face"), PHOTO("photo"), CLIPART("clipart"), LINEART("lineart");
+        ANY(null, "Any"), FACE("face", "Face"), PHOTO("photo", "Photo"), CLIPART("clipart", "Clipart"), LINEART("lineart", "Lineart");
         private String value;
-        private ImageType(String value) {
+        private String displayName;
+        private ImageType(String value, String displayName) {
             this.value = value;
+            this.displayName = displayName;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
         }
     }
 
     public enum ImageRights {
-        PUBLIC_DOMAIN("cc_publicdomain"), ATTRIBUTE("cc_attribute"), NON_COMMERCIAL("cc_noncommercial");
+        ANY(null, "Any"), PUBLIC_DOMAIN("cc_publicdomain", "Public Domain"), ATTRIBUTE("cc_attribute", "Attributable"), NON_COMMERCIAL("cc_noncommercial", "Noncommerical");
         private String value;
-        private ImageRights(String value) {
+        private String displayName;
+        private ImageRights(String value, String displayName) {
             this.value = value;
+            this.displayName = displayName;
+        }
+
+        @Override
+        public String toString() {
+            return displayName;
         }
     }
 
     private static final long serialVersionUID = 5249605308630544032L;
-    public ImageSize size;
-    public ImageColor color;
-    public ImageType type;
-    public ImageRights rights;
+    public ImageSize size = ImageSize.ANY;
+    public ImageColor color = ImageColor.ANY;
+    public ImageType type = ImageType.ANY;
+    public ImageRights rights = ImageRights.ANY;
     public String siteFilter;
     public int resultsPerPage;
 

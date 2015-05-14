@@ -54,9 +54,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="save_button_label">Save</string>
     <string name="image_size_label">Image Size</string>
-    <string name="image_color_label">Color</string>
-    <string name="image_type_label">Type</string>
-    <string name="image_rights_label">Rights</string>
+    <string name="image_color_label">Image Color</string>
+    <string name="image_type_label">Image Type</string>
+    <string name="image_rights_label">Image Attribution</string>
     <string name="image_site_label">Site Filter</string>
     <string name="cancel_button_label">Cancel</string>
+    <string name="image_description_text">Image Description</string>
 </resources>

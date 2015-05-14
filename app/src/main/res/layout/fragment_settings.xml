@@ -5,6 +5,22 @@
     android:layout_height="fill_parent"
     android:id="@+id/rlSettings">
 
+    <!-- An invisible view aligned to the center of the parent. Allows other
+views to be arranged on either side -->
+    <View
+        android:id="@+id/centerShim"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:visibility="invisible"
+        android:layout_centerHorizontal="true"/>
+
+    <!--Set width to match_parent sets maximum width. alignParentLeft aligns
+    the left edge of this view with the left edge of its parent. toLeftOf
+    sets the right edge of this view to align with the left edge of the
+    given view. The result of all three settings is that this view will
+    always take up exactly half of the width of its parent, however wide
+    that may be. -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,6 +29,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:padding="10dp"
         android:layout_alignBottom="@+id/spnSize"
         android:gravity="center_vertical" />
 
@@ -25,13 +42,14 @@
         android:layout_alignParentEnd="true"
         android:focusable="false"
         android:spinnerMode="dropdown"
-        android:layout_toRightOf="@+id/tvImageSize"
-        android:layout_toEndOf="@+id/tvImageSize" />
+        android:layout_toEndOf="@+id/centerShim"
+        android:layout_toRightOf="@+id/centerShim" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/image_color_label"
+        android:padding="10dp"
         android:id="@+id/tvColor"
         android:layout_below="@+id/tvImageSize"
         android:layout_alignBottom="@+id/spnColor"
@@ -45,13 +63,14 @@
         android:layout_below="@+id/tvImageSize"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/tvColor"
-        android:layout_toEndOf="@+id/tvColor" />
+        android:layout_toRightOf="@+id/centerShim"
+        android:layout_toEndOf="@+id/centerShim" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/image_type_label"
+        android:padding="10dp"
         android:id="@+id/tvType"
         android:layout_below="@+id/tvColor"
         android:layout_alignParentLeft="true"
@@ -66,8 +85,8 @@
         android:layout_below="@+id/spnColor"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/tvType"
-        android:layout_toEndOf="@+id/tvType" />
+        android:layout_toRightOf="@+id/centerShim"
+        android:layout_toEndOf="@+id/centerShim" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,6 +96,7 @@
         android:layout_below="@+id/tvType"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:padding="10dp"
         android:layout_alignBottom="@+id/spnRights"
         android:gravity="center_vertical" />
 
@@ -87,8 +107,8 @@
         android:layout_below="@+id/spnType"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_toRightOf="@+id/tvRights"
-        android:layout_toEndOf="@+id/tvRights"
+        android:layout_toRightOf="@+id/centerShim"
+        android:layout_toEndOf="@+id/centerShim"
         android:spinnerMode="dropdown" />
 
     <TextView
@@ -96,6 +116,7 @@
         android:layout_height="wrap_content"
         android:text="@string/image_site_label"
         android:id="@+id/tvSite"
+        android:padding="10dp"
         android:layout_below="@+id/tvRights"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -109,8 +130,8 @@
         android:layout_below="@+id/spnRights"
         android:layout_alignRight="@+id/spnRights"
         android:layout_alignEnd="@+id/spnRights"
-        android:layout_toRightOf="@+id/tvSite"
-        android:layout_toEndOf="@+id/tvSite" />
+        android:layout_toEndOf="@+id/centerShim"
+        android:layout_toRightOf="@+id/centerShim" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -118,6 +139,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSite"
         android:gravity="center_horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
