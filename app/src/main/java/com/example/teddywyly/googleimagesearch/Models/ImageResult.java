@@ -27,6 +27,9 @@ public class ImageResult implements Serializable {
             fullUrl = JSON.getString("url");
             thumbUrl = JSON.getString("tbUrl");
             title = JSON.getString("title");
+            imageWidth = JSON.getInt("width");
+            imageHeight = JSON.getInt("height");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

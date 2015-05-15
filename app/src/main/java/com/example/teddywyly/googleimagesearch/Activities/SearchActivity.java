@@ -81,6 +81,7 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Log.d("Debug", "Query!");
+                getSupportActionBar().setTitle(s);
                 fetchImagesForPage(1);
                 return true;
             }
@@ -159,6 +160,6 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
     @Override
     public void onSaveSettings(GoogleSearchSettings settings) {
         searchSettings = settings;
-        Log.d("Debug", "Save!");
+        fetchImagesForPage(1);
     }
 }

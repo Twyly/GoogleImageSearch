@@ -4,26 +4,13 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     tools:context="com.example.teddywyly.googleimagesearch.Activities.ImageDisplayActivity">
-
-    <!--com.example.teddywyly.googleimagesearch.Views.TouchImageView-->
+    
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:id="@+id/ivFullImage"/>
-
-    <!--<TextView-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|center"-->
-        <!--android:text="@string/image_description_text"-->
-        <!--android:id="@+id/tvImageDescription"-->
-        <!--android:padding="10dp"-->
-        <!--android:textColor="#FFFFFF"-->
-        <!--android:gravity="center_horizontal"-->
-        <!--android:maxLines="2"-->
-        <!--android:ellipsize="end" />-->
 
     <ProgressBar
         style="?android:attr/progressBarStyleLarge"

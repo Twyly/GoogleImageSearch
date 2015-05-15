@@ -1,6 +1,7 @@
 package com.example.teddywyly.googleimagesearch.Activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +14,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.text.Html;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.teddywyly.googleimagesearch.DeviceDimensionsHelper;
 import com.example.teddywyly.googleimagesearch.Models.ImageResult;
 import com.example.teddywyly.googleimagesearch.R;
 import com.squareup.picasso.Callback;
@@ -30,12 +34,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 
 public class ImageDisplayActivity extends AppCompatActivity {
 
     private ProgressBar pbImage;
     private ShareActionProvider miShareProvider;
     private ImageResult result;
+    private PhotoViewAttacher mAttacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +57,20 @@ public class ImageDisplayActivity extends AppCompatActivity {
         //tvImageDescription.setText(Html.fromHtml(result.title));
 
         final ImageView ivFullImage = (ImageView)findViewById(R.id.ivFullImage);
-        Picasso.with(this).load(result.fullUrl).into(ivFullImage, new Callback() {
+
+        float ratio = (float)result.imageWidth/result.imageHeight;
+        int width = DeviceDimensionsHelper.getDisplayWidth(this);
+        int height = (int)(width/ratio);
+
+        Log.d("DEBUG", result.fullUrl);
+        Picasso.with(this).load(result.fullUrl).resize(width, height).into(ivFullImage, new Callback() {
             @Override
             public void onSuccess() {
+                if (mAttacher == null) {
+                    mAttacher = new PhotoViewAttacher(ivFullImage);
+                } else {
+                    mAttacher.update();
+                }
                 pbImage.setVisibility(View.GONE);
                 setupShareIntent(ivFullImage);
             }
