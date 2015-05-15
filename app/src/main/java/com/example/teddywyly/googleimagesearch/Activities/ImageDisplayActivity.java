@@ -1,5 +1,6 @@
 package com.example.teddywyly.googleimagesearch.Activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.text.Html;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,13 +35,14 @@ public class ImageDisplayActivity extends AppCompatActivity {
 
     private ProgressBar pbImage;
     private ShareActionProvider miShareProvider;
+    private ImageResult result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_display);
 
-        ImageResult result = (ImageResult) getIntent().getSerializableExtra("result");
+        result = (ImageResult) getIntent().getSerializableExtra("result");
         getSupportActionBar().setTitle(Html.fromHtml(result.title));
 
         //TextView tvImageDescription = (TextView)findViewById(R.id.tvImageDescription);
@@ -80,12 +83,20 @@ public class ImageDisplayActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-//        if (id == R.id.action_settings) {
-//            return true;
-//        }
+        if (id == R.id.miDetail) {
+            showDescriptionDialog();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDescriptionDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(Html.fromHtml(result.title));
+        AlertDialog dialog = builder.show();
+        TextView messageView = (TextView)dialog.findViewById(android.R.id.message);
+        messageView.setGravity(Gravity.CENTER);
     }
 
     private void setupShareIntent(ImageView imageView) {
