@@ -80,10 +80,8 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
         btnCancel.setOnClickListener(this);
 
         etSite = (EditText)view.findViewById(R.id.etSite);
-
         GoogleSearchSettings settings = (GoogleSearchSettings)getArguments().getSerializable("settings");
         searchSettings = settings;
-        Log.i("DEBUGCOLOR", settings.color.toString());
         getDialog().setTitle("Filter Search");
 
         spnSize = (Spinner) view.findViewById(R.id.spnSize);
@@ -130,60 +128,4 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
         }
     }
 
-//    public enum ImageSize {
-//        ANY("Any"), SMALL("Small"), MEDIUM("Medium"), LARGE("Large"), EXTRA_LARGE("Extra Large");
-//        private String displayName;
-//        private ImageSize(String displayName) {
-//            this.displayName = displayName;
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return displayName;
-//        }
-//    }
-//
-//    public enum ImageColor {
-//        ANY("Any"), BLACK("black"), BLUE("blue"), BROWN("brown"), GRAY("gray"), GREEN("green"),
-//        ORANGE("orange"), PINK("pink"), PURPLE("purple"), RED("red"), TEAL("teal"),
-//        WHITE("white"), YELLOW("yellow");
-//
-//        private String displayName;
-//
-//        private ImageColor(String displayName) {
-//            this.displayName = displayName;
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return displayName;
-//        }
-//    }
-//
-//    // Spinner Titles
-//    public enum ImageType {
-//        ANY("Any"), FACE("Face"), PHOTO("photo"), CLIPART("clipart"), LINEART("lineart");
-//        private String displayName;
-//        private ImageType(String displayName) {
-//            this.displayName = displayName;
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return displayName;
-//        }
-//    }
-//
-//    public enum ImageRights {
-//        ALL("All"), PUBLIC_DOMAIN("Public Domain"), ATTRIBUTE("Attributable"), NON_COMMERCIAL("Noncommerical");
-//        private String displayName;
-//        private ImageRights(String displayName) {
-//            this.displayName = displayName;
-//        }
-//
-//        @Override
-//        public String toString() {
-//            displayName;
-//        }
-//    }
 }

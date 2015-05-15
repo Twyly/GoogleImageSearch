@@ -1,13 +1,15 @@
 package com.example.teddywyly.googleimagesearch.Models;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by teddywyly on 5/13/15.
  */
 
 
-// Having the displayname in here is a violation of MVC, but due to the exceissive switch statements
+// Having the displayname in here is a violation of MVC, but due to the excessive switch statements
     // it saves, it seems worth it
 
 public class GoogleSearchSettings implements Serializable {
@@ -28,7 +30,7 @@ public class GoogleSearchSettings implements Serializable {
     }
 
     public enum ImageColor {
-        ANY(null, "Any"), BLACK("black", "Black"), BLUE("blue", "Nlue"), BROWN("brown", "Brown"), GRAY("gray", "Gray"), GREEN("green", "Green"),
+        ANY(null, "Any"), BLACK("black", "Black"), BLUE("blue", "Blue"), BROWN("brown", "Brown"), GRAY("gray", "Gray"), GREEN("green", "Green"),
         ORANGE("orange", "Orange"), PINK("pink", "Pink"), PURPLE("purple", "Purple"), RED("red", "Red"), TEAL("teal", "Teal"),
         WHITE("white", "White"), YELLOW("yellow", "Yellow");
         private String value;
@@ -80,29 +82,25 @@ public class GoogleSearchSettings implements Serializable {
     public ImageType type = ImageType.ANY;
     public ImageRights rights = ImageRights.ANY;
     public String siteFilter;
-    public int resultsPerPage;
 
-    public GoogleSearchSettings(int resultsPerPage) {
-        this.resultsPerPage = resultsPerPage;
-    }
 
-    public String settingsAsQueryString() {
-        String url = "&rsz=" + resultsPerPage;
-        if (size != null) {
-            url = url + "&imgsz=" + size.value;
+    public HashMap<String, String>settingsAsParameters() {
+        HashMap<String, String> params = new HashMap<String, String>();
+        if (size != ImageSize.ANY) {
+            params.put("imgsz", size.value);
         }
-        if (color != null) {
-            url = url + "&imgcolor=" + color.value;
+        if (color != ImageColor.ANY) {
+            params.put("imgcolor", color.value);
         }
-        if (type != null) {
-            url = url + "&imgtype=" + type.value;
+        if (type != ImageType.ANY) {
+            params.put("imgtype", type.value);
         }
-        if (rights != null) {
-            url = url + "&as_rights=" + rights.value;
+        if (rights != ImageRights.ANY) {
+            params.put("as_rights", rights.value);
         }
         if (siteFilter != null) {
-            url = url + "&as_sitesearch=" + siteFilter;
+            params.put("as_sitesearch", siteFilter);
         }
-        return url;
+        return params;
     }
 }

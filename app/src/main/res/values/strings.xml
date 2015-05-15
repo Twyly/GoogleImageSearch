@@ -60,4 +60,9 @@
     <string name="image_site_label">Site Filter</string>
     <string name="cancel_button_label">Cancel</string>
     <string name="image_description_text">Image Description</string>
+
+    <string name="network_failure_warning">You must connect to the network to use this application.</string>
+    <string name="casual_dialog_accept">Ok</string>
+
+
 </resources>

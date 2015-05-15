@@ -1,10 +1,10 @@
 package com.example.teddywyly.googleimagesearch.Activities;
 
-import android.support.v4.app.DialogFragment;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,8 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
-import android.widget.GridView;
 import android.support.v7.widget.SearchView;
 
 import com.etsy.android.grid.StaggeredGridView;
@@ -22,47 +20,38 @@ import com.example.teddywyly.googleimagesearch.EndlessScrollListener;
 import com.example.teddywyly.googleimagesearch.Fragments.SettingsDialog;
 import com.example.teddywyly.googleimagesearch.Models.GoogleSearchSettings;
 import com.example.teddywyly.googleimagesearch.Models.ImageResult;
+import com.example.teddywyly.googleimagesearch.NetworkManager;
 import com.example.teddywyly.googleimagesearch.R;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.apache.http.Header;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 
 public class SearchActivity extends AppCompatActivity implements SettingsDialog.SettingsDialogListener {
 
-    private final String SEACH_ENDPOINT = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0";
-    private final int ITEMS_PER_FETCH = 8;
-
-    //private EditText etQuery;
     private SearchView svQuery;
     private StaggeredGridView sgvResults;
     private ArrayList<ImageResult> imageResults;
     private ImageResultsAdapter aImageResults;
     private GoogleSearchSettings searchSettings;
+    private NetworkManager networkManager;
+
     private Boolean isFetching = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        searchSettings = new GoogleSearchSettings(ITEMS_PER_FETCH);
-        searchSettings.color = GoogleSearchSettings.ImageColor.RED;
+        searchSettings = new GoogleSearchSettings();
+        networkManager = new NetworkManager(this);
         setupViews();
         imageResults = new ArrayList<ImageResult>();
         aImageResults = new ImageResultsAdapter(this, imageResults);
         sgvResults.setAdapter(aImageResults);
 
-
     }
 
     public void setupViews() {
-        //etQuery = (EditText)findViewById(R.id.etQuery);
         sgvResults = (StaggeredGridView)findViewById(R.id.sgvResults);
         sgvResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -92,7 +81,7 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Log.d("Debug", "Query!");
-                fetchImagesForPage(0);
+                fetchImagesForPage(1);
                 return true;
             }
 
@@ -128,41 +117,43 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
 
     public void fetchImagesForPage(final int page) {
 
-        if (svQuery == null || isFetching) {
+        if (svQuery == null || isFetching || page < 1) {
             return;
         }
+
         isFetching = true;
         String query = svQuery.getQuery().toString();
 
-        String searchUrl = SEACH_ENDPOINT + "&start=" + searchSettings.resultsPerPage*page + searchSettings.settingsAsQueryString() + "&q=" + query;
-        Log.d("DEBUG", searchUrl);
-        AsyncHttpClient client = new AsyncHttpClient();
-
-        client.get(searchUrl, new JsonHttpResponseHandler() {
+        networkManager.fetchImages(page, query, searchSettings.settingsAsParameters(), new NetworkManager.OnImageFetchListener() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                JSONArray imageResultsJSON = null;
-                try {
-                    imageResultsJSON = response.getJSONObject("responseData").getJSONArray("results");
-                    if (page == 0) {
-                        imageResults.clear(); // If new search
-                        aImageResults.notifyDataSetChanged();
-                    }
-                    imageResults.addAll(ImageResult.fromJSONArray(imageResultsJSON));
+            public void onSucess(ArrayList<ImageResult> images) {
+                if (page == 1) {
+                    imageResults.clear(); // If new search
                     aImageResults.notifyDataSetChanged();
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+                imageResults.addAll(images);
+                aImageResults.notifyDataSetChanged();
                 isFetching = false;
             }
-
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                super.onFailure(statusCode, headers, responseString, throwable);
+            public void onFailure(Throwable throwable) {
                 isFetching = false;
             }
         });
+    }
+
+    public void showErrorDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.network_failure_warning)
+        .setCancelable(true)
+        .setPositiveButton(R.string.casual_dialog_accept,
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        builder.create().show();
     }
 
     @Override

@@ -5,6 +5,7 @@
     android:background="#000000"
     tools:context="com.example.teddywyly.googleimagesearch.Activities.ImageDisplayActivity">
 
+    <!--com.example.teddywyly.googleimagesearch.Views.TouchImageView-->
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
