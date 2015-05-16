@@ -1,4 +1,8 @@
-package com.example.teddywyly.googleimagesearch.Models;
+package com.example.teddywyly.googleimagesearch.searchscreen;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -12,7 +16,7 @@ import java.util.Map;
 // Having the displayname in here is a violation of MVC, but due to the excessive switch statements
     // it saves, it seems worth it
 
-public class GoogleSearchSettings implements Serializable {
+public class GoogleSearchSettings implements Parcelable {
 
 
     public enum ImageSize {
@@ -76,13 +80,12 @@ public class GoogleSearchSettings implements Serializable {
         }
     }
 
-    private static final long serialVersionUID = 5249605308630544032L;
+//    private static final long serialVersionUID = 5249605308630544032L;
     public ImageSize size = ImageSize.ANY;
     public ImageColor color = ImageColor.ANY;
     public ImageType type = ImageType.ANY;
     public ImageRights rights = ImageRights.ANY;
     public String siteFilter;
-
 
     public HashMap<String, String>settingsAsParameters() {
         HashMap<String, String> params = new HashMap<String, String>();
@@ -98,9 +101,51 @@ public class GoogleSearchSettings implements Serializable {
         if (rights != ImageRights.ANY) {
             params.put("as_rights", rights.value);
         }
-        if (siteFilter != null) {
+        if (!TextUtils.isEmpty(siteFilter)) {
             params.put("as_sitesearch", siteFilter);
         }
         return params;
+    }
+
+    public GoogleSearchSettings() {
+
+    }
+
+    // Parcelable
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(size.ordinal());
+        parcel.writeInt(color.ordinal());
+        parcel.writeInt(type.ordinal());
+        parcel.writeInt(rights.ordinal());
+        parcel.writeString(siteFilter);
+
+    }
+
+    public static final Parcelable.Creator<GoogleSearchSettings> CREATOR
+            = new Parcelable.Creator<GoogleSearchSettings>() {
+        @Override
+        public GoogleSearchSettings createFromParcel(Parcel in) {
+            return new GoogleSearchSettings(in);
+        }
+
+        @Override
+        public GoogleSearchSettings[] newArray(int size) {
+            return new GoogleSearchSettings[size];
+        }
+    };
+
+    private GoogleSearchSettings(Parcel in) {
+        size = ImageSize.values()[in.readInt()];
+        color = ImageColor.values()[in.readInt()];
+        type = ImageType.values()[in.readInt()];
+        rights = ImageRights.values()[in.readInt()];
+        siteFilter = in.readString();
     }
 }

@@ -1,7 +1,6 @@
-package com.example.teddywyly.googleimagesearch.Activities;
+package com.example.teddywyly.googleimagesearch.searchscreen;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
@@ -15,11 +14,10 @@ import android.widget.AdapterView;
 import android.support.v7.widget.SearchView;
 
 import com.etsy.android.grid.StaggeredGridView;
-import com.example.teddywyly.googleimagesearch.Adapters.ImageResultsAdapter;
+import com.example.teddywyly.googleimagesearch.detailscreen.ImageDisplayActivity;
 import com.example.teddywyly.googleimagesearch.EndlessScrollListener;
-import com.example.teddywyly.googleimagesearch.Fragments.SettingsDialog;
-import com.example.teddywyly.googleimagesearch.Models.GoogleSearchSettings;
-import com.example.teddywyly.googleimagesearch.Models.ImageResult;
+import com.example.teddywyly.googleimagesearch.helpers.ErrorHelper;
+import com.example.teddywyly.googleimagesearch.settingsscreen.SettingsDialog;
 import com.example.teddywyly.googleimagesearch.NetworkManager;
 import com.example.teddywyly.googleimagesearch.R;
 
@@ -139,22 +137,9 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
             @Override
             public void onFailure(Throwable throwable) {
                 isFetching = false;
+                ErrorHelper.showErrorAlert(SearchActivity.this, ErrorHelper.ErrorType.NETWORK);
             }
         });
-    }
-
-    public void showErrorDialog() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.network_failure_warning)
-        .setCancelable(true)
-        .setPositiveButton(R.string.casual_dialog_accept,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        builder.create().show();
     }
 
     @Override

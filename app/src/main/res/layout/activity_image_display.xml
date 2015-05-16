@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
-    tools:context="com.example.teddywyly.googleimagesearch.Activities.ImageDisplayActivity">
-    
+    tools:context="com.example.teddywyly.googleimagesearch.detailscreen.ImageDisplayActivity">
+
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

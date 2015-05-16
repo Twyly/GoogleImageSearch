@@ -1,21 +1,15 @@
-package com.example.teddywyly.googleimagesearch.Adapters;
+package com.example.teddywyly.googleimagesearch.searchscreen;
 
-import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.example.teddywyly.googleimagesearch.Models.ImageResult;
 import com.example.teddywyly.googleimagesearch.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,9 +63,10 @@ public class ImageResultsAdapter extends ArrayAdapter<ImageResult> {
         // Clear Previous Results
         ivImage.setImageResource(0);
 
+
         // Paint View
         //tvTitle.setText(Html.fromHtml(imageInfo.title));
-        Picasso.with(getContext()).load(imageInfo.thumbUrl).into(ivImage);
+        Picasso.with(getContext()).load(imageInfo.thumbUrl).placeholder(R.drawable.geometry).into(ivImage);
 
         return convertView;
     }

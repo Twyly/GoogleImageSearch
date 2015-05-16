@@ -1,4 +1,4 @@
-package com.example.teddywyly.googleimagesearch.Adapters;
+package com.example.teddywyly.googleimagesearch.unused;
 
 import android.app.Activity;
 import android.view.Gravity;

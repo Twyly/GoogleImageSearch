@@ -1,24 +1,19 @@
-package com.example.teddywyly.googleimagesearch.Fragments;
+package com.example.teddywyly.googleimagesearch.settingsscreen;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.example.teddywyly.googleimagesearch.Models.GoogleSearchSettings;
+import com.example.teddywyly.googleimagesearch.searchscreen.GoogleSearchSettings;
 import com.example.teddywyly.googleimagesearch.R;
-
-import java.util.Set;
 
 /**
  * Created by teddywyly on 5/12/15.
@@ -43,7 +38,7 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
     public static SettingsDialog newInstance(GoogleSearchSettings settings) {
         SettingsDialog frag = new SettingsDialog();
         Bundle args = new Bundle();
-        args.putSerializable("settings", settings);
+        args.putParcelable("settings", settings);
         frag.setArguments(args);
         return frag;
     }
@@ -73,6 +68,7 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
     }
 
     private void setupViews(View view) {
+
         Button btnSave = (Button)view.findViewById(R.id.btnSave);
         btnSave.setOnClickListener(this);
 
@@ -80,7 +76,9 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
         btnCancel.setOnClickListener(this);
 
         etSite = (EditText)view.findViewById(R.id.etSite);
-        GoogleSearchSettings settings = (GoogleSearchSettings)getArguments().getSerializable("settings");
+//        GoogleSearchSettings settings = (GoogleSearchSettings)getArguments().getSerializable("settings");
+        GoogleSearchSettings settings = (GoogleSearchSettings)getArguments().getParcelable("settings");
+
         searchSettings = settings;
         getDialog().setTitle("Filter Search");
 

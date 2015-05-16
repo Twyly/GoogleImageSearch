@@ -2,21 +2,16 @@
 
     <style name="CreamsicleTheme" parent="Theme.AppCompat.Light">
         <item name="android:background">@color/secondary_theme</item>
-        <item name="android:editTextStyle">@style/CreamsicleEditText</item>
-
-        <!--<item name="android:actionBarWidgetTheme">@style/Theme.stylingactionbar.widget</item>-->
     </style>
 
-    <!--<style name="Theme.stylingactionbar.widget" parent="@android:style/Theme.Holo">-->
-        <!--<item name="android:editTextBackground">@style/CreamsicleEditText</item>-->
-    <!--</style>-->
 
     <style name="CreamsicleEditText" parent="@android:style/Widget.EditText">
         <item name="android:background">@drawable/creamsicletheme_edit_text_holo_light</item>
     </style>
 
-    <style name="CreamsicleET">
-        <!--<item name="android:background">@drawable/creamsicletheme_edit_text_holo_light</item>-->
+    <style name="CreamsicleButton">
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/primary_theme</item>
     </style>
 
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:padding="10dp"
@@ -129,7 +130,7 @@ views to be arranged on either side -->
         android:layout_toEndOf="@+id/centerShim"
         android:layout_toRightOf="@+id/centerShim"
         android:singleLine="true"
-        style="@style/CreamsicleET"
+        style="@style/CreamsicleEditText"
         android:ellipsize="start" />
 
     <LinearLayout
@@ -147,6 +148,7 @@ views to be arranged on either side -->
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save_button_label"
+            style="@style/CreamsicleButton"
             android:id="@+id/btnSave"
             android:layout_gravity="center_vertical" />
 
@@ -154,6 +156,7 @@ views to be arranged on either side -->
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel_button_label"
+            style="@style/CreamsicleButton"
             android:id="@+id/btnCancel"
             android:layout_gravity="center_vertical" />
     </LinearLayout>

@@ -1,7 +1,6 @@
-package com.example.teddywyly.googleimagesearch.Activities;
+package com.example.teddywyly.googleimagesearch.detailscreen;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -9,12 +8,10 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
 import android.text.Html;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -24,8 +21,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.teddywyly.googleimagesearch.DeviceDimensionsHelper;
-import com.example.teddywyly.googleimagesearch.Models.ImageResult;
+import com.example.teddywyly.googleimagesearch.helpers.DeviceDimensionsHelper;
+import com.example.teddywyly.googleimagesearch.helpers.ErrorHelper;
+import com.example.teddywyly.googleimagesearch.searchscreen.ImageResult;
 import com.example.teddywyly.googleimagesearch.R;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -49,20 +47,17 @@ public class ImageDisplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image_display);
 
-        result = (ImageResult) getIntent().getSerializableExtra("result");
+        result = (ImageResult) getIntent().getParcelableExtra("result");
+
         getSupportActionBar().setTitle(Html.fromHtml(result.title));
 
-        //TextView tvImageDescription = (TextView)findViewById(R.id.tvImageDescription);
         pbImage = (ProgressBar)findViewById(R.id.pbImage);
-        //tvImageDescription.setText(Html.fromHtml(result.title));
-
         final ImageView ivFullImage = (ImageView)findViewById(R.id.ivFullImage);
 
         float ratio = (float)result.imageWidth/result.imageHeight;
         int width = DeviceDimensionsHelper.getDisplayWidth(this);
         int height = (int)(width/ratio);
 
-        Log.d("DEBUG", result.fullUrl);
         Picasso.with(this).load(result.fullUrl).resize(width, height).into(ivFullImage, new Callback() {
             @Override
             public void onSuccess() {
@@ -77,7 +72,7 @@ public class ImageDisplayActivity extends AppCompatActivity {
 
             @Override
             public void onError() {
-                // Handle Error
+                ErrorHelper.showErrorAlert(ImageDisplayActivity.this, ErrorHelper.ErrorType.GENERIC);
                 pbImage.setVisibility(View.GONE);
             }
         });
@@ -87,10 +82,8 @@ public class ImageDisplayActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_image_display, menu);
-
         MenuItem item = menu.findItem(R.id.miShare);
         miShareProvider = (ShareActionProvider)MenuItemCompat.getActionProvider(item);
-
         return true;
     }
 
@@ -100,12 +93,10 @@ public class ImageDisplayActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         if (id == R.id.miDetail) {
             showDescriptionDialog();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

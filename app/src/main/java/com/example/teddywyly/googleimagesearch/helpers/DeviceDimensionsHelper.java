@@ -1,4 +1,4 @@
-package com.example.teddywyly.googleimagesearch;
+package com.example.teddywyly.googleimagesearch.helpers;
 
 import android.content.Context;
 import android.content.res.Resources;
