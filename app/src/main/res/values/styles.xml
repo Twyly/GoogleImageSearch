@@ -21,12 +21,13 @@
 
     <style name="dialog_light" parent="@android:style/Theme.Holo.Dialog">
         <item name="@android:background">@android:color/transparent</item>
-        <item name="@android:textColor">@android:color/holo_red_light</item>
+        <item name="@android:textColor">@android:color/holo_blue_light</item>
     </style>
 
 
     <style name="HoloBlueTextView" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
     <style name="CreamsicleEditText" parent="@android:style/Widget.EditText">

@@ -134,7 +134,8 @@ views to be arranged on either side -->
         android:layout_alignEnd="@+id/spnRights"
         android:layout_toEndOf="@+id/centerShim"
         android:layout_toRightOf="@+id/centerShim"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
+        android:textSize="17dp"
         android:singleLine="true"
         android:ellipsize="start" />
 
@@ -156,6 +157,8 @@ views to be arranged on either side -->
             android:textColor="@android:color/holo_blue_light"
             android:background="@android:color/transparent"
             android:id="@+id/btnSave"
+            android:padding="20dp"
+            android:textSize="20sp"
             android:layout_gravity="center_vertical" />
 
         <Button
@@ -165,6 +168,8 @@ views to be arranged on either side -->
             android:textColor="@android:color/holo_blue_light"
             android:background="@android:color/transparent"
             android:id="@+id/btnCancel"
+            android:padding="20dp"
+            android:textSize="20sp"
             android:layout_gravity="center_vertical" />
     </LinearLayout>
 

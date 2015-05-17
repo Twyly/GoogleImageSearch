@@ -57,21 +57,17 @@ public class SettingsDialog extends SupportBlurDialogFragment implements View.On
 
     @Override
     protected boolean isDimmingEnable() {
-        // Enable or disable the dimming effect.
-        // Disabled by default.
         return true;
     }
 
     @Override
     protected int getBlurRadius() {
-        // Allow to customize the blur radius factor.
-        return 12;
+        return 40;
     }
+
 
     @Override
     protected boolean isActionBarBlurred() {
-        // Enable or disable the blur effect on the action bar.
-        // Disabled by default.
         return true;
     }
 
@@ -83,7 +79,6 @@ public class SettingsDialog extends SupportBlurDialogFragment implements View.On
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString() + " must implement SettingsDialogListener");
         }
-        Log.d("DEBUG", "Attached!");
     }
 
     //@Nullable
@@ -116,16 +111,16 @@ public class SettingsDialog extends SupportBlurDialogFragment implements View.On
         getDialog().setTitle("Filter Search");
 
         spnSize = (Spinner) view.findViewById(R.id.spnSize);
-        spnSize.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageSize>(getActivity(), android.R.layout.simple_spinner_dropdown_item, GoogleSearchSettings.ImageSize.values()));
+        spnSize.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageSize>(getActivity(), R.layout.spinner_item, GoogleSearchSettings.ImageSize.values()));
 
         spnColor = (Spinner) view.findViewById(R.id.spnColor);
-        spnColor.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageColor>(getActivity(), android.R.layout.simple_spinner_dropdown_item, GoogleSearchSettings.ImageColor.values()));
+        spnColor.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageColor>(getActivity(), R.layout.spinner_item, GoogleSearchSettings.ImageColor.values()));
 
         spnType = (Spinner) view.findViewById(R.id.spnType);
-        spnType.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageType>(getActivity(), android.R.layout.simple_spinner_dropdown_item, GoogleSearchSettings.ImageType.values()));
+        spnType.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageType>(getActivity(), R.layout.spinner_item, GoogleSearchSettings.ImageType.values()));
 
         spnRights = (Spinner) view.findViewById(R.id.spnRights);
-        spnRights.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageRights>(getActivity(), android.R.layout.simple_spinner_dropdown_item, GoogleSearchSettings.ImageRights.values()));
+        spnRights.setAdapter(new ArrayAdapter<GoogleSearchSettings.ImageRights>(getActivity(), R.layout.spinner_item, GoogleSearchSettings.ImageRights.values()));
 
         updateViewsFromSettings();
     }

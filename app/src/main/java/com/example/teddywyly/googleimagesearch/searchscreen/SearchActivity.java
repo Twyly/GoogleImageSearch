@@ -42,8 +42,6 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
     private NetworkManager networkManager;
     private ProgressBar pbImageFetch;
 
-    private Boolean isFetching = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,11 +128,10 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
 
     public void fetchImagesForPage(final int page) {
 
-        if (svQuery == null || isFetching || page < 1) {
+        if (svQuery == null || page < 1) {
             return;
         }
 
-        isFetching = true;
         pbImageFetch.setVisibility(View.VISIBLE);
         if (page == 1) {
             imageResults.clear();
@@ -152,13 +149,11 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
 
                 imageResults.addAll(images);
                 aImageResults.notifyDataSetChanged();
-                isFetching = false;
                 pbImageFetch.setVisibility(View.GONE);
 
             }
             @Override
             public void onFailure(Throwable throwable) {
-                isFetching = false;
                 pbImageFetch.setVisibility(View.GONE);
                 if (throwable instanceof JSONException) {
                     ErrorHelper.showErrorAlert(SearchActivity.this, ErrorHelper.ErrorType.GENERIC);
