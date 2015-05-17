@@ -3,6 +3,7 @@ package com.example.teddywyly.googleimagesearch;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.example.teddywyly.googleimagesearch.searchscreen.ImageResult;
 import com.loopj.android.http.AsyncHttpClient;
@@ -26,6 +27,8 @@ public class NetworkManager {
 
     private final String SEACH_ENDPOINT = "https://ajax.googleapis.com/ajax/services/search/images?v=1.0";
     private final int ITEMS_PER_FETCH = 8;
+    private final String GOOGLE_LIMIT_RESPONSE = "out of range start";
+
 
     public interface OnImageFetchListener {
         public void onSucess(ArrayList<ImageResult> images);
@@ -61,6 +64,15 @@ public class NetworkManager {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray imageResultsJSON = null;
                 try {
+                    String details = response.getString("responseDetails");
+
+                    // If the server runs out of images, we respond with an empty array.
+                    // In practice we would probably want to throw an error here or let the
+                    // user know
+                    if (details.equals(GOOGLE_LIMIT_RESPONSE)) {
+                        listener.onSucess(new ArrayList<ImageResult>());
+                        return;
+                    }
                     imageResultsJSON = response.getJSONObject("responseData").getJSONArray("results");
                     if (listener != null) {
                         listener.onSucess(ImageResult.fromJSONArray(imageResultsJSON));

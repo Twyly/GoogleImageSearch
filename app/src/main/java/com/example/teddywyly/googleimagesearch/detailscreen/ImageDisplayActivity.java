@@ -110,14 +110,16 @@ public class ImageDisplayActivity extends AppCompatActivity {
 
     private void setupShareIntent(ImageView imageView) {
         // Fetch Bitmap Uri locally
-        Uri bmpUri = getLocalBitmapUri(imageView); // see previous remote images section
-        // Create share intent as described above
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
-        shareIntent.setType("image/*");
-        // Attach share event to the menu item provider
-        miShareProvider.setShareIntent(shareIntent);
+        if (miShareProvider != null) {
+            Uri bmpUri = getLocalBitmapUri(imageView); // see previous remote images section
+            // Create share intent as described above
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, bmpUri);
+            shareIntent.setType("image/*");
+            // Attach share event to the menu item provider
+            miShareProvider.setShareIntent(shareIntent);
+        }
 
     }
 

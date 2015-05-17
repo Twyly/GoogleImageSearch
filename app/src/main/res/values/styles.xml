@@ -2,8 +2,32 @@
 
     <style name="CreamsicleTheme" parent="Theme.AppCompat.Light">
         <item name="android:background">@color/secondary_theme</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
     </style>
 
+    <style name="MyActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/primary_theme</item>
+        <item name="android:titleTextStyle">@style/MyActionBar.TitleTextStyle</item>
+
+        <!-- Support library compatibility -->
+        <item name="background">@color/primary_theme</item>
+        <item name="titleTextStyle">@style/MyActionBar.TitleTextStyle</item>
+    </style>
+
+    <style name="MyActionBar.TitleTextStyle"
+        parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/primary_theme</item>
+    </style>
+
+    <style name="dialog_light" parent="@android:style/Theme.Holo.Dialog">
+        <item name="@android:background">@android:color/transparent</item>
+        <item name="@android:textColor">@android:color/holo_red_light</item>
+    </style>
+
+
+    <style name="HoloBlueTextView" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@android:color/holo_blue_light</item>
+    </style>
 
     <style name="CreamsicleEditText" parent="@android:style/Widget.EditText">
         <item name="android:background">@drawable/creamsicletheme_edit_text_holo_light</item>

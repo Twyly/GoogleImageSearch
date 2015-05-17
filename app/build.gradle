@@ -10,6 +10,8 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        renderscriptTargetApi 22
+        renderscriptSupportModeEnabled true
     }
     buildTypes {
         release {
@@ -27,4 +29,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.loopj.android:android-async-http:1.4.5'
+    compile 'fr.tvbarthel.blurdialogfragment:lib:2.1.2'
 }

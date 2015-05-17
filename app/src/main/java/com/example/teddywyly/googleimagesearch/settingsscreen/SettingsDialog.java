@@ -1,6 +1,8 @@
 package com.example.teddywyly.googleimagesearch.settingsscreen;
 
 import android.app.Activity;
+import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
@@ -15,10 +17,12 @@ import android.widget.Spinner;
 import com.example.teddywyly.googleimagesearch.searchscreen.GoogleSearchSettings;
 import com.example.teddywyly.googleimagesearch.R;
 
+import fr.tvbarthel.lib.blurdialogfragment.SupportBlurDialogFragment;
+
 /**
  * Created by teddywyly on 5/12/15.
  */
-public class SettingsDialog extends DialogFragment implements View.OnClickListener {
+public class SettingsDialog extends SupportBlurDialogFragment implements View.OnClickListener {
 
     private GoogleSearchSettings searchSettings;
     private Spinner spnSize;
@@ -26,6 +30,9 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
     private Spinner spnType;
     private Spinner spnRights;
     private EditText etSite;
+
+//    private BlurDialogFragmentHelper mHelper;
+
 
     public interface SettingsDialogListener {
         void onSaveSettings(GoogleSearchSettings settings);
@@ -40,7 +47,32 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
         Bundle args = new Bundle();
         args.putParcelable("settings", settings);
         frag.setArguments(args);
+        //frag.setStyle(STYLE_NORMAL, android.R.style.Theme_Holo_Dialog);
+        frag.setStyle(STYLE_NORMAL, R.style.dialog_light);
+
         return frag;
+    }
+
+
+
+    @Override
+    protected boolean isDimmingEnable() {
+        // Enable or disable the dimming effect.
+        // Disabled by default.
+        return true;
+    }
+
+    @Override
+    protected int getBlurRadius() {
+        // Allow to customize the blur radius factor.
+        return 12;
+    }
+
+    @Override
+    protected boolean isActionBarBlurred() {
+        // Enable or disable the blur effect on the action bar.
+        // Disabled by default.
+        return true;
     }
 
     @Override
@@ -64,6 +96,8 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
         // Show soft keyboard automatically
         //mEditText.requestFocus();
         //getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0));
+
         return view;
     }
 
@@ -76,7 +110,6 @@ public class SettingsDialog extends DialogFragment implements View.OnClickListen
         btnCancel.setOnClickListener(this);
 
         etSite = (EditText)view.findViewById(R.id.etSite);
-//        GoogleSearchSettings settings = (GoogleSearchSettings)getArguments().getSerializable("settings");
         GoogleSearchSettings settings = (GoogleSearchSettings)getArguments().getParcelable("settings");
 
         searchSettings = settings;

@@ -12,6 +12,7 @@ import com.example.teddywyly.googleimagesearch.R;
 public class ErrorHelper {
 
     public enum ErrorType {
+        NOMOREDATA,
         GENERIC,
         NETWORK;
     }
@@ -25,6 +26,9 @@ public class ErrorHelper {
                 break;
             case GENERIC:
                 message = context.getString(R.string.general_failure_warning);
+                break;
+            case NOMOREDATA:
+                message = "You have seen all the data corresponding to this search";
                 break;
         }
         builder.setMessage(message)

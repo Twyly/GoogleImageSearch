@@ -16,6 +16,7 @@
         <activity
             android:name=".searchscreen.SearchActivity"
             android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_search" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

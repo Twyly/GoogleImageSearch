@@ -31,6 +31,7 @@ views to be arranged on either side -->
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        style="@style/HoloBlueTextView"
         android:layout_alignBottom="@+id/spnSize"
         android:gravity="center_vertical" />
 
@@ -51,6 +52,7 @@ views to be arranged on either side -->
         android:layout_height="wrap_content"
         android:text="@string/image_color_label"
         android:id="@+id/tvColor"
+        style="@style/HoloBlueTextView"
         android:layout_below="@+id/tvImageSize"
         android:layout_alignBottom="@+id/spnColor"
         android:gravity="center_vertical" />
@@ -74,6 +76,7 @@ views to be arranged on either side -->
         android:layout_below="@+id/tvColor"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        style="@style/HoloBlueTextView"
         android:gravity="center_vertical"
         android:layout_alignBottom="@+id/spnType" />
 
@@ -94,6 +97,7 @@ views to be arranged on either side -->
         android:id="@+id/tvRights"
         android:layout_below="@+id/tvType"
         android:layout_alignParentLeft="true"
+        style="@style/HoloBlueTextView"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/spnRights"
         android:gravity="center_vertical" />
@@ -117,6 +121,7 @@ views to be arranged on either side -->
         android:layout_below="@+id/tvRights"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        style="@style/HoloBlueTextView"
         android:layout_alignBottom="@+id/etSite"
         android:gravity="center_vertical" />
 
@@ -129,8 +134,8 @@ views to be arranged on either side -->
         android:layout_alignEnd="@+id/spnRights"
         android:layout_toEndOf="@+id/centerShim"
         android:layout_toRightOf="@+id/centerShim"
+        android:textColor="@android:color/black"
         android:singleLine="true"
-        style="@style/CreamsicleEditText"
         android:ellipsize="start" />
 
     <LinearLayout
@@ -148,7 +153,8 @@ views to be arranged on either side -->
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save_button_label"
-            style="@style/CreamsicleButton"
+            android:textColor="@android:color/holo_blue_light"
+            android:background="@android:color/transparent"
             android:id="@+id/btnSave"
             android:layout_gravity="center_vertical" />
 
@@ -156,7 +162,8 @@ views to be arranged on either side -->
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancel_button_label"
-            style="@style/CreamsicleButton"
+            android:textColor="@android:color/holo_blue_light"
+            android:background="@android:color/transparent"
             android:id="@+id/btnCancel"
             android:layout_gravity="center_vertical" />
     </LinearLayout>

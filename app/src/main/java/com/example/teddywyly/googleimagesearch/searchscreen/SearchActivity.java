@@ -1,17 +1,22 @@
 package com.example.teddywyly.googleimagesearch.searchscreen;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.support.v7.widget.SearchView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.etsy.android.grid.StaggeredGridView;
 import com.example.teddywyly.googleimagesearch.detailscreen.ImageDisplayActivity;
@@ -21,6 +26,8 @@ import com.example.teddywyly.googleimagesearch.settingsscreen.SettingsDialog;
 import com.example.teddywyly.googleimagesearch.NetworkManager;
 import com.example.teddywyly.googleimagesearch.R;
 
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -33,6 +40,7 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
     private ImageResultsAdapter aImageResults;
     private GoogleSearchSettings searchSettings;
     private NetworkManager networkManager;
+    private ProgressBar pbImageFetch;
 
     private Boolean isFetching = false;
 
@@ -66,6 +74,12 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
                 fetchImagesForPage(page);
             }
         });
+
+        View footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.progress, null, false);
+        sgvResults.addFooterView(footerView);
+        pbImageFetch = (ProgressBar) footerView.findViewById(R.id.pbImageFetch);
+        pbImageFetch.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -121,23 +135,36 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
         }
 
         isFetching = true;
-        String query = svQuery.getQuery().toString();
+        pbImageFetch.setVisibility(View.VISIBLE);
+        if (page == 1) {
+            imageResults.clear();
+            aImageResults.notifyDataSetChanged();
+        }
+
+        //String query = svQuery.getQuery().toString();
+        // Always contains the latest search query for infinate scroll, even if user presses back
+        String query = getSupportActionBar().getTitle().toString();
+
 
         networkManager.fetchImages(page, query, searchSettings.settingsAsParameters(), new NetworkManager.OnImageFetchListener() {
             @Override
             public void onSucess(ArrayList<ImageResult> images) {
-                if (page == 1) {
-                    imageResults.clear(); // If new search
-                    aImageResults.notifyDataSetChanged();
-                }
+
                 imageResults.addAll(images);
                 aImageResults.notifyDataSetChanged();
                 isFetching = false;
+                pbImageFetch.setVisibility(View.GONE);
+
             }
             @Override
             public void onFailure(Throwable throwable) {
                 isFetching = false;
-                ErrorHelper.showErrorAlert(SearchActivity.this, ErrorHelper.ErrorType.NETWORK);
+                pbImageFetch.setVisibility(View.GONE);
+                if (throwable instanceof JSONException) {
+                    ErrorHelper.showErrorAlert(SearchActivity.this, ErrorHelper.ErrorType.GENERIC);
+                } else {
+                    ErrorHelper.showErrorAlert(SearchActivity.this, ErrorHelper.ErrorType.NETWORK);
+                }
             }
         });
     }
