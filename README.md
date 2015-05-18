@@ -20,7 +20,6 @@ Checklist (Tasks that are not completed are **IN PROGRESS**):
 * [x] StaggeredGridView used to improve the grid of image results
 * [x] User can zoom or pan images displayed in full-screen detail view
 
-
 ![Video Walkthrough](GoogleImageSearch.gif)
 
 External Libraries Used:
