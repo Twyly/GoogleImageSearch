@@ -48,26 +48,29 @@ public class ImageDisplayActivity extends AppCompatActivity {
         setContentView(R.layout.activity_image_display);
 
         result = (ImageResult) getIntent().getParcelableExtra("result");
-
-        getSupportActionBar().setTitle(Html.fromHtml(result.title));
-
         pbImage = (ProgressBar)findViewById(R.id.pbImage);
         final ImageView ivFullImage = (ImageView)findViewById(R.id.ivFullImage);
 
+        getSupportActionBar().setTitle(Html.fromHtml(result.title));
+        downloadImage(result, ivFullImage);
+
+    }
+
+    private void downloadImage(ImageResult result, final ImageView imageView) {
         float ratio = (float)result.imageWidth/result.imageHeight;
         int width = DeviceDimensionsHelper.getDisplayWidth(this);
         int height = (int)(width/ratio);
 
-        Picasso.with(this).load(result.fullUrl).resize(width, height).into(ivFullImage, new Callback() {
+        Picasso.with(this).load(result.fullUrl).resize(width, height).into(imageView, new Callback() {
             @Override
             public void onSuccess() {
                 if (mAttacher == null) {
-                    mAttacher = new PhotoViewAttacher(ivFullImage);
+                    mAttacher = new PhotoViewAttacher(imageView);
                 } else {
                     mAttacher.update();
                 }
                 pbImage.setVisibility(View.GONE);
-                setupShareIntent(ivFullImage);
+                setupShareIntent(imageView);
             }
 
             @Override

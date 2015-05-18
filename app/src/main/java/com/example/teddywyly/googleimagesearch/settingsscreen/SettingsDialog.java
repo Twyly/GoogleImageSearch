@@ -1,11 +1,8 @@
 package com.example.teddywyly.googleimagesearch.settingsscreen;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +28,6 @@ public class SettingsDialog extends SupportBlurDialogFragment implements View.On
     private Spinner spnRights;
     private EditText etSite;
 
-//    private BlurDialogFragmentHelper mHelper;
-
-
     public interface SettingsDialogListener {
         void onSaveSettings(GoogleSearchSettings settings);
     }
@@ -47,9 +41,7 @@ public class SettingsDialog extends SupportBlurDialogFragment implements View.On
         Bundle args = new Bundle();
         args.putParcelable("settings", settings);
         frag.setArguments(args);
-        //frag.setStyle(STYLE_NORMAL, android.R.style.Theme_Holo_Dialog);
         frag.setStyle(STYLE_NORMAL, R.style.dialog_light);
-
         return frag;
     }
 
@@ -87,12 +79,7 @@ public class SettingsDialog extends SupportBlurDialogFragment implements View.On
 
         View view = inflater.inflate(R.layout.fragment_settings, container);
         setupViews(view);
-
-        // Show soft keyboard automatically
-        //mEditText.requestFocus();
-        //getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0));
-
         return view;
     }
 

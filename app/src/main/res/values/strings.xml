@@ -6,6 +6,8 @@
     <string name="action_search">Search</string>
 
     <string name="search_prompt">Enter search query</string>
+    <string name="site_filter_hint">""</string>
+
     <string name="search_label">Search</string>
     <string name="image_title_label">Image Title</string>
     <string name="image_description">Image Result</string>
@@ -25,6 +27,9 @@
 
     <string name="network_failure_warning">You must connect to the network to use this application.</string>
     <string name="general_failure_warning">Something went wrong.. Please try again.</string>
+    <string name="no_more_data_failure_warning">You have seen all the data corresponding to this search.</string>
+
+
 
     <string name="casual_dialog_accept">Ok</string>
 

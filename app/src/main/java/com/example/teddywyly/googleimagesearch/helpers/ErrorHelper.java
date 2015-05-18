@@ -28,7 +28,7 @@ public class ErrorHelper {
                 message = context.getString(R.string.general_failure_warning);
                 break;
             case NOMOREDATA:
-                message = "You have seen all the data corresponding to this search";
+                message = context.getString(R.string.no_more_data_failure_warning);
                 break;
         }
         builder.setMessage(message)

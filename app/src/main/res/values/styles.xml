@@ -28,16 +28,20 @@
     <style name="HoloBlueTextView" parent="@android:style/Widget.TextView">
         <item name="android:textColor">@android:color/holo_blue_light</item>
         <item name="android:textSize">17sp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="CreamsicleEditText" parent="@android:style/Widget.EditText">
-        <item name="android:background">@drawable/creamsicletheme_edit_text_holo_light</item>
-    </style>
+    <style name="HoloBlueButton" parent="@android:style/Widget.Button">
+        <item name="android:textColor">@android:color/holo_blue_light</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
 
-    <style name="CreamsicleButton">
-        <item name="android:background">@color/white</item>
-        <item name="android:textColor">@color/primary_theme</item>
     </style>
-
 
 </resources>

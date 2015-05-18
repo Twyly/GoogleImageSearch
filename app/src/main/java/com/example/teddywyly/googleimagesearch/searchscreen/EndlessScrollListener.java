@@ -1,4 +1,4 @@
-package com.example.teddywyly.googleimagesearch;
+package com.example.teddywyly.googleimagesearch.searchscreen;
 
 import android.widget.AbsListView;
 

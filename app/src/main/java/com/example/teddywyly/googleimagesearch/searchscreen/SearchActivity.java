@@ -7,23 +7,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.MenuItemCompat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.support.v7.widget.SearchView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.etsy.android.grid.StaggeredGridView;
 import com.example.teddywyly.googleimagesearch.detailscreen.ImageDisplayActivity;
-import com.example.teddywyly.googleimagesearch.EndlessScrollListener;
 import com.example.teddywyly.googleimagesearch.helpers.ErrorHelper;
 import com.example.teddywyly.googleimagesearch.settingsscreen.SettingsDialog;
-import com.example.teddywyly.googleimagesearch.NetworkManager;
 import com.example.teddywyly.googleimagesearch.R;
 
 
@@ -46,14 +41,16 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
         searchSettings = new GoogleSearchSettings();
         networkManager = new NetworkManager(this);
+
         setupViews();
-        imageResults = new ArrayList<ImageResult>();
-        aImageResults = new ImageResultsAdapter(this, imageResults);
-        sgvResults.setAdapter(aImageResults);
+        setupAdapter();
 
     }
+
+
 
     public void setupViews() {
         sgvResults = (StaggeredGridView)findViewById(R.id.sgvResults);
@@ -73,11 +70,18 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
             }
         });
 
+        // Add Progress Footer View
         View footerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.progress, null, false);
         sgvResults.addFooterView(footerView);
         pbImageFetch = (ProgressBar) footerView.findViewById(R.id.pbImageFetch);
         pbImageFetch.setVisibility(View.GONE);
 
+    }
+
+    public void setupAdapter() {
+        imageResults = new ArrayList<ImageResult>();
+        aImageResults = new ImageResultsAdapter(this, imageResults);
+        sgvResults.setAdapter(aImageResults);
     }
 
     @Override
@@ -86,11 +90,9 @@ public class SearchActivity extends AppCompatActivity implements SettingsDialog.
         getMenuInflater().inflate(R.menu.menu_search, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         svQuery = (SearchView) MenuItemCompat.getActionView(searchItem);
-
         svQuery.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d("Debug", "Query!");
                 getSupportActionBar().setTitle(s);
                 fetchImagesForPage(1);
                 return true;

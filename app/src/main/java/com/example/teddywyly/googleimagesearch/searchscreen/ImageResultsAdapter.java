@@ -18,33 +18,8 @@ import java.util.List;
 public class ImageResultsAdapter extends ArrayAdapter<ImageResult> {
 
     private class ViewHolder {
-
+        ImageView thumbnail;
     }
-
-//    public ImageResultsAdapter(Activity activity, ArrayList<ImageResult> list) {
-//        super(activity, list);
-//    }
-//
-//    @Override
-//    public View getDataRow(int position, View convertView, ViewGroup parent) {
-//
-//        ImageResult imageInfo = getItem(position);
-//        if (convertView == null) {
-//            convertView = LayoutInflater.from(mActivity).inflate(R.layout.item_image_result, parent, false);
-//        }
-//
-//        ImageView ivImage = (ImageView)convertView.findViewById(R.id.ivImage);
-//        TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
-//
-//        // Clear Previous Results
-//        ivImage.setImageResource(0);
-//
-//        // Paint View
-//        tvTitle.setText(Html.fromHtml(imageInfo.title));
-//        Picasso.with(mActivity).load(imageInfo.thumbUrl).into(ivImage);
-//
-//        return convertView;
-//    }
 
     public ImageResultsAdapter(Context context, List<ImageResult> images) {
         super(context, R.layout.item_image_result, images);
@@ -53,20 +28,22 @@ public class ImageResultsAdapter extends ArrayAdapter<ImageResult> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ImageResult imageInfo = getItem(position);
+
+        ViewHolder viewHolder;
         if (convertView == null) {
+            viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_image_result, parent, false);
+            viewHolder.thumbnail = (ImageView)convertView.findViewById(R.id.ivImage);
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        ImageView ivImage = (ImageView)convertView.findViewById(R.id.ivImage);
-        //TextView tvTitle = (TextView)convertView.findViewById(R.id.tvTitle);
-
         // Clear Previous Results
-        ivImage.setImageResource(0);
-
+        viewHolder.thumbnail.setImageResource(0);
 
         // Paint View
-        //tvTitle.setText(Html.fromHtml(imageInfo.title));
-        Picasso.with(getContext()).load(imageInfo.thumbUrl).placeholder(R.drawable.geometry).into(ivImage);
+        Picasso.with(getContext()).load(imageInfo.thumbUrl).placeholder(R.drawable.geometry).into(viewHolder.thumbnail);
 
         return convertView;
     }
